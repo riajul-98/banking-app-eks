@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: banking-app
-        image: riajul98/fastapi-app
+        image: riajul98/fastapi-app:15
         ports:
         - containerPort: 3000
 
