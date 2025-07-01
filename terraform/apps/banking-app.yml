@@ -18,7 +18,7 @@ spec:
       - name: banking-app
         image: riajul98/fastapi-app:15
         ports:
-        - containerPort: 3000
+        - containerPort: 8000
 
 --- 
 
@@ -33,11 +33,11 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 3000
-  - name: app-port
-    protocol: TCP
-    port: 8086
-    targetPort: 3000
+    targetPort: 8000
+  # - name: app-port
+  #   protocol: TCP
+  #   port: 8086
+  #   targetPort: 8000
 
 ---
 
