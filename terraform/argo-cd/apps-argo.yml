@@ -2,14 +2,14 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: apps
-  namespace: argocd 
+  namespace: argo-cd 
 spec:
   project: default
 
   source:
     repoURL: "https://github.com/riajul-98/banking-app-eks"
     targetRevision: HEAD
-    path: apps
+    path: terraform/apps
 
   destination:
     server: "https://kubernetes.default.svc"
