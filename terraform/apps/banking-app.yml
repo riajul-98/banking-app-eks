@@ -1,0 +1,67 @@
+appVersion: apps/v1
+kind: apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banking-app 
+  labels:
+    app: banking-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: banking-app
+  template:
+    metadata:
+      labels:
+        app: banking-app
+    spec:
+      containers:
+      - name: banking-app
+        image: riajul98/fastapi-app
+        ports:
+        - containerPort: 3000
+
+--- 
+
+apiVersion: v1 
+kind: Service
+metadata:
+  name: banking-app
+spec:
+  selector:
+    app: banking-app
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+  - name: app-port
+    protocol: TCP
+    port: 8086
+    targetPort: 3000
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: banking-app-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "issuer"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: banking-app.lab.riajul-devops.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: banking-app
+            port: 
+              number: 80
+  tls:
+  - hosts:
+    - banking-app.lab.riajul-devops.com
+    secretName: banking-app-tls
